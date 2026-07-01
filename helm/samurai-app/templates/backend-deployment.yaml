@@ -48,7 +48,7 @@ spec:
               memory: {{ .Values.backend.resources.limits.memory }}
           readinessProbe:
             httpGet:
-              path: /health
+              path: /api/health
               port: {{ .Values.backend.port }}
             initialDelaySeconds: 20
             periodSeconds: 10
