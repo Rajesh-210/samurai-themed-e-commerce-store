@@ -1,17 +1,22 @@
 import os
 from datetime import timedelta
 
-
 class Config:
+    # ─────────────────────────────────────────
     # Database
-    MYSQL_HOST = os.environ.get('MYSQL_HOST', 'localhost')
-    MYSQL_PORT = int(os.environ.get('MYSQL_PORT', 3306))
+    # Works for both:
+    #   docker-compose → injects MYSQL_HOST=mysql
+    #   Kubernetes     → injects MYSQL_HOST=mysql-service
+    # ─────────────────────────────────────────
+    MYSQL_HOST     = os.environ.get('MYSQL_HOST', 'localhost')
+    MYSQL_PORT     = int(os.environ.get('MYSQL_PORT', 3306))
     MYSQL_DATABASE = os.environ.get('MYSQL_DATABASE', 'samurai_db')
-    MYSQL_USER = os.environ.get('MYSQL_USER', 'samurai_user')
+    MYSQL_USER     = os.environ.get('MYSQL_USER', 'samurai_user')
     MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD', 'samurai_pass_2026')
 
     SQLALCHEMY_DATABASE_URI = (
-        f"mysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
+        f"mysql://{MYSQL_USER}:{MYSQL_PASSWORD}"
+        f"@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
         "?charset=utf8mb4"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
