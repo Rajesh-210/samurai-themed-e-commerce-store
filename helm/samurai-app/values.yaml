@@ -11,7 +11,7 @@
 backend:
   image:
     repository: hamzamalik1/samurai-backend
-    tag: latest          # ← CI will override this with sha-<commit>
+    tag: sha-243b8f6          # ← CI will override this with sha-<commit>
     pullPolicy: Always
   replicas: 1
   port: 5000
@@ -38,7 +38,7 @@ backend:
 frontend:
   image:
     repository: hamzamalik1/samurai-frontend
-    tag: latest          # ← CI will override this with sha-<commit>
+    tag: sha-243b8f6          # ← CI will override this with sha-<commit>
     pullPolicy: Always
   replicas: 1
   port: 3000
