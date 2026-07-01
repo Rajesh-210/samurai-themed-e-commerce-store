@@ -1,8 +1,6 @@
 # ============================================================
 # values.yaml — Samurai E-Commerce App
-# All environment-specific config lives here.
 # CI pipeline updates backend.image.tag + frontend.image.tag
-# via: helm upgrade --set backend.image.tag=sha-abc1234
 # ============================================================
 
 # ─────────────────────────────────────────
@@ -11,7 +9,7 @@
 backend:
   image:
     repository: hamzamalik1/samurai-backend
-    tag: sha-243b8f6          # ← CI will override this with sha-<commit>
+    tag: latest
     pullPolicy: Always
   replicas: 1
   port: 5000
@@ -20,10 +18,10 @@ backend:
     port: 5000
   env:
     FLASK_ENV: production
-    DB_HOST: mysql-service
-    DB_PORT: "3306"
-    DB_NAME: samurai_db
-    DB_USER: samurai_user
+    MYSQL_HOST: mysql-service
+    MYSQL_PORT: "3306"
+    MYSQL_DATABASE: samurai_db
+    MYSQL_USER: samurai_user
   resources:
     requests:
       cpu: 100m
@@ -38,14 +36,14 @@ backend:
 frontend:
   image:
     repository: hamzamalik1/samurai-frontend
-    tag: sha-243b8f6          # ← CI will override this with sha-<commit>
+    tag: latest
     pullPolicy: Always
   replicas: 1
-  port: 3000
+  port: 80
   service:
     type: NodePort
-    port: 3000
-    nodePort: 30080      # Access app at http://<ec2-ip>:30080
+    port: 80
+    nodePort: 30080
   resources:
     requests:
       cpu: 100m
@@ -68,8 +66,6 @@ mysql:
     port: 3306
   database: samurai_db
   user: samurai_user
-  # Passwords are in mysql-secret.yaml (base64 encoded)
-  # Do NOT put real passwords here
   storage: 1Gi
   resources:
     requests:
@@ -80,7 +76,7 @@ mysql:
       memory: 512Mi
 
 # ─────────────────────────────────────────
-# INGRESS (disabled for KinD — using NodePort instead)
+# INGRESS (disabled for KinD — using NodePort)
 # ─────────────────────────────────────────
 ingress:
   enabled: false
