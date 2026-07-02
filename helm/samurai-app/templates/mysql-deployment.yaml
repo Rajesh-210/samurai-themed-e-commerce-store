@@ -43,11 +43,6 @@ spec:
           volumeMounts:
             - name: mysql-data
               mountPath: /var/lib/mysql
-            - name: mysql-initdb        # ← add this
-              mountPath: /docker-entrypoint-initdb.d  
-            - name: mysql-initdb        # ← add this
-              configMap:
-                name: mysql-initdb
           resources:
             requests:
               cpu: {{ .Values.mysql.resources.requests.cpu }}
